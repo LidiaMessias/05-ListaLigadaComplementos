@@ -8,6 +8,7 @@ struct NO {
 };
 
 NO* primeiro = NULL;
+NO* ultimo = NULL;
 
 // headers
 void menu();
@@ -125,28 +126,92 @@ void inserirElemento()
 	cin >> novo->valor;
 	novo->prox = NULL;
 
+	// Se a lista estiver vazia
 	if (primeiro == NULL)
 	{
 		primeiro = novo;
 	}
-	else
-	{
-		// procura o final da lista
-		NO* aux = primeiro;
-		while (aux->prox != NULL) {
-			aux = aux->prox;
+	else {
+		// Se o elemento digitado for menor que o primeiro
+		NO* aux = primeiro; 
+		if (aux == primeiro && novo->valor < aux->valor)
+		{
+			novo->prox = aux;
+			primeiro = novo; 
 		}
-		aux->prox = novo;
+
+		else { // Percorrer a lista para achar a posição onde deve ser inserido
+			NO* aux = primeiro;			
+			while (aux->prox != NULL && novo->valor > aux->prox->valor) {	
+				aux = aux->prox;
+			}
+			
+			novo->prox = aux->prox;
+			aux->prox = novo;
+			
+		}
 	}
 }
 
 void excluirElemento()
 {
+	NO* excluir = NULL;
+	int elemento;
+	cout << "Qual elemento deseja excluir? " << endl;
+	cin >> elemento;
+
+	NO* aux = primeiro;
+	// Verificando se o elemento a excluir é o primeiro da lista
+	if (aux == primeiro && aux->valor == elemento) {
+		excluir = aux;
+		primeiro = aux->prox;
+	}
+	// Senão percorremos a lista para acha-lo, o anterior e o proximo
+	else {
+		NO* ant = primeiro;
+		while (aux != NULL) {
+			if (aux->valor == elemento) {
+				excluir = aux;
+				ant->prox = excluir->prox;
+			}
+			ant = aux;
+			aux = aux->prox;
+		}
+	}
+
+	if (excluir) {
+		free(excluir);
+		cout << "Elemento excluido com sucesso! \n";
+	}
+	else {
+		cout << "Elemento nao encontrado!\n";
+	}
+
+
 
 }
 
 void buscarElemento()
 {
+	int elemento, busca = 0;
+	cout << "Digite o valor que deseja buscar: " << endl;
+	cin >> elemento;
+
+	NO* aux = primeiro;
+	while (aux != NULL) {
+		if (aux->valor == elemento) {
+			//cout << "Elemento encontrado!" << endl;
+			busca = 1;
+			break;
+		}
+		aux = aux->prox;
+	}
+	if (busca == 1) {
+		cout << "Elemento encontrado!" << endl;
+	}
+	else {
+		cout << "Elemento nao encontrado na lista!" << endl;
+	}
 
 }
 
