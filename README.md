@@ -1,3 +1,6 @@
+Lidia Luzia Messias
+lidia.messias@fatec.sp.gov.br
+
 # Lista Ligada - Complementos
 ---
 
