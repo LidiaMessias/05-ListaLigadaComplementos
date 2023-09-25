@@ -131,24 +131,42 @@ void inserirElemento()
 	{
 		primeiro = novo;
 	}
+
+	// Verifica se o elemento digitado já existe na lista
 	else {
-		// Se o elemento digitado for menor que o primeiro
-		NO* aux = primeiro; 
-		if (aux == primeiro && novo->valor < aux->valor)
-		{
-			novo->prox = aux;
-			primeiro = novo; 
+		int busca = 0;
+		NO* aux = primeiro;
+		while (aux != NULL) {
+			if (aux->valor == novo->valor) {
+				busca = 1;
+				break;
+			}
+			aux = aux->prox;
+		}
+		if (busca == 1) {
+			cout << "Esse elemento já existe na lista!" << endl;
+			return;
 		}
 
-		else { // Percorrer a lista para achar a posição onde deve ser inserido
-			NO* aux = primeiro;			
-			while (aux->prox != NULL && novo->valor > aux->prox->valor) {	
-				aux = aux->prox;
+		else {
+			// Se o elemento digitado for menor que o primeiro
+			NO* aux = primeiro;
+			if (aux == primeiro && novo->valor < aux->valor)
+			{
+				novo->prox = aux;
+				primeiro = novo;
 			}
-			
-			novo->prox = aux->prox;
-			aux->prox = novo;
-			
+
+			else { // Percorrer a lista para achar a posição onde deve ser inserido
+				NO* aux = primeiro;
+				while (aux->prox != NULL && novo->valor > aux->prox->valor) {
+					aux = aux->prox;
+				}
+
+				novo->prox = aux->prox;
+				aux->prox = novo;
+
+			}
 		}
 	}
 }
